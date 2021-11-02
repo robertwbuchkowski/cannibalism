@@ -1,0 +1,119 @@
+ID,Group
+BitingFlies,NA
+CanopyWebSpiders,Spider
+CrabSpiders,Spider
+CraneFlies,NA
+HerbivorousFlies,NA
+HerbivorousTrueBugs,NA
+Lepidoptera,NA
+NonbitingMidges,NA
+OtherSurfaceActiveSpiders,Spider
+ParasiticWasps,NA
+PredaceousBeetles,Beetle
+SaprophagousDiptera,NA
+SurfaceCollembola,Collembola
+SurfaceWebSpiders,Spider
+WolfSpiders,Spider
+PredatoryMites,Pred. Mite
+NematophagousMites,Nem. Mite
+PredatoryNematodes,Pred. Nematode
+OmnivorousNematodes,Omn. Nematode
+Tardigrades,Tardigrades
+Amoebae,Amoebae
+Cilliates,Cilliates
+Rotifers,Rotifers
+CollembolaSoil,Collembola
+CryptostigmaticMites,Mite
+NonCryptostigmaticMites,Mite
+FungivorousNematodes,Fung. Nematodes
+Flagellates,Flagellates
+Enchytraeids,Enchytraeids
+BacteriophagousNematodes,Bact. Nematodes
+PhytophagousNematodes,Phyto. Nematodes
+Fungi,Fungi
+Bacteria,Bacteria
+Detritus,NA
+Roots,NA
+Lichen,NA
+Moss,NA
+VascularPlants.aboveground.tissue,NA
+Pollen,NA
+Blood,NA
+Diatoms,NA
+PredMite,Pred. Mite
+NemMite,Nem. Mite
+PredColl,Pred. Collembola
+PredNem,Pred. Nematode
+OmniNem,Omn. Nematode
+Amoebae,Amoebae
+FungNem,Fung. Nematodes
+FungColl,Collembola
+FungCryJuvMite,Mite
+FungCryAdultMite,Mite
+FungNoncryMite,Mite
+BactNem,Bact. Nematodes
+Flagellates,Flagellates
+Fungi,Fungi
+Bacteria,Bacteria
+Enchytraeids,Enchytraeids
+PhytoNem,Phyto. Nematodes
+WaterSolubleSugars,NA
+LabileOM,NA
+RecalOM,NA
+Roots,NA
+ActiveSOM,NA
+Amoeba,Amoebae
+Bacteria,Bacteria
+Bacteriophagousnematodes,Bact. Nematodes
+Ciliates,Cilliates
+Collembolans,Collembola
+Flagellates,Flagellates
+Fungi,Fungi
+FungivorousCryptostigmata,Mite
+Fungivorousnematodes,Fung. Nematodes
+FungivorousProstigmata,Mite
+Nematophagousmites,Nem. Mite
+Omnivorousnematodes,Omn. Nematode
+Phytophagousnematodes,Phyto. Nematodes
+Predaceousdilurans,Pred. dilurans
+Predaceousmites,Pred. Mite
+Predaceousnematodes,Pred. Nematode
+Proturans,Proturans
+Roots,NA
+SlowSOM,NA
+Symphyla,Symphyla
+Predatorymites,Pred. Mite
+Nematophagousmites,Nem. Mite
+Predatorynematodes,Pred. Nematode
+Omnivorousnematodes,Omn. Nematode
+Fungivorousnematodes,Fung. Nematodes
+BacteriophagousNematodes,Bact. Nematodes
+Collembola,Collembola
+Noncryptostigmatid,Mite
+Cryptostigmatidmites,Mite
+Amoebae,Amoebae
+Flagellates,Flagellates
+Phytophagousnematodes,Phyto. Nematodes
+Arbuscularmycorrhizal,NA
+Saprobicfungi,Fungi
+Bacteria,Bacteria
+Detritus,NA
+Roots,NA
+Bacteria,Bacteria
+Fungi,Fungi
+Amoebae,Amoebae
+Flagellates,Flagellates
+HerbNem,Phyto. Nematodes
+BactNem,Bact. Nematodes
+FungNem,Fung. Nematodes
+PredNem,Pred. Nematode
+Crypmite,Mite
+Ncrypmite,Mite
+Bactmite,Mite
+Predmite,Pred. Mite
+Nemmite,Nem. Mite
+Predcoll,Pred. Collembola
+Fungcoll,Collembola
+Ench,Enchytraeids
+Earthworm,Earthworm
+Detritus,NA
