@@ -79,7 +79,7 @@ if(F) { # Not used after initial creation, file modified in excel
   data.frame(ID = c(Koltz2018$prop$ID,
                     Holtkamp2011$Young$prop$ID,
                     Andres2016$GA$prop$ID,
-                    CPER$prop$ID,
+                    Hunt1987$prop$ID,
                     deRuiter1994$INT$prop$ID)) %>%
     write_csv("Data/Key.csv")
 }
@@ -95,7 +95,7 @@ result = rbind(
   do.call("rbind",nametocolumn(lapply(Andres2016, cantable))),
   do.call("rbind",nametocolumn(lapply(Holtkamp2011, cantable))),
   do.call("rbind",nametocolumn(lapply(deRuiter1994, cantable))),
-  cbind(cantable(CPER), Web = "CPER"),
+  cbind(cantable(Hunt1987), Web = "CPER"),
   cbind(cantable(Koltz2018), Web = "Koltz2018")
 )
 
@@ -169,8 +169,8 @@ getcanndiff <- function(cann_rate = 0.99, testcomm, cancan, rtnall = F){
 # Create a vector for the results:
 results = vector(mode = "list", length = 18)
 
-# CPER
-results[[1]] <- cbind(data.frame(t(sapply(seq(0, 0.99, by = 0.01), getcanndiff, testcomm = CPER, cancan = c(1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0)))), Web = "CPER")
+# Hunt1987
+results[[1]] <- cbind(data.frame(t(sapply(seq(0, 0.99, by = 0.01), getcanndiff, testcomm = Hunt1987, cancan = c(1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0)))), Web = "CPER")
 
 # Holtkamp
 results[[2]] <- cbind(data.frame(t(sapply(seq(0, 0.99, by = 0.01), getcanndiff, testcomm = corrstoich(Holtkamp2011$Young), cancan = c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0)))), Web = "Holtkamp Young")
@@ -252,9 +252,9 @@ results[[17]] <- cbind(
 # ... Create new community
 if(F){ # Not used after the initial creation: Resulting file is saved in the directory
   
-  KoltzCPER = CPER
+  KoltzCPER = Hunt1987
   
-  write_csv(CPER$prop, "Data/CPERprop2.csv")
+  write_csv(Hunt1987$prop, "Data/CPERprop2.csv")
   write_csv(Koltz2018$prop, "Data/Koltzprop.csv")
   
   newprop = read_csv("Data/CPERprop.csv")
