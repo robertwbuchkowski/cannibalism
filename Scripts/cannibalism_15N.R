@@ -169,3 +169,97 @@ outputL = lpSolve::lp("min",
 
 # Range of possible rates:
 c(outputL$solution[8],outputU$solution[8])
+
+# Mieczan2015 ----
+
+M15 = read_rds("Data/Mieczan2015.rds")
+
+# Switch rows so order is the same
+M152 = M15
+M15[10,] = M152[11,]
+M15[11,] = M152[10,]
+
+rm(M152)
+
+# ...PROTIST ---
+
+# SPRING:
+range = 1:6
+
+# SUMMER:
+range = 7:12
+
+# Fall:
+range = 13:18
+
+# Max or min cannibalism
+f.obj = c(0,0,0,0,0,1)
+
+# Set the constraint matrix
+f.con = matrix(0,ncol = 6, nrow = 6)
+diag(f.con) = 1
+f.con = rbind(M15$x[range]+3.4,rep(1, 6),f.con)
+
+# Set the direction
+f.dir = c("=", "=", rep(">=", 6))
+
+# Set the rhs
+f.rhs = c(M15$x[max(range)],1, rep(0,6))
+
+outputU = lpSolve::lp("max",
+                      f.obj,
+                      f.con,
+                      f.dir,
+                      f.rhs)
+
+outputL = lpSolve::lp("min",
+                      f.obj,
+                      f.con,
+                      f.dir,
+                      f.rhs)
+
+# Range of possible rates:
+c(outputL$solution[6],outputU$solution[6])
+
+# ...COPEOPOD/Rotifer ---
+
+# Copeopod:
+f.obj = c(0,0,0,0,1)
+
+# Rotifer:
+f.obj = c(0,0,0,1,0)
+
+# SPRING:
+range = 1:5
+
+# SUMMER:
+range = 7:11
+
+# Fall:
+range = 13:17
+
+# Set the constraint matrix
+f.con = matrix(0,ncol = 5, nrow = 5)
+diag(f.con) = 1
+f.con = rbind(M15$x[range]+3.4,rep(1, 5),f.con)
+
+# Set the direction
+f.dir = c("=", "=", rep(">=", 5))
+
+# Set the rhs
+f.rhs = c(M15$x[max(range)-1],1, rep(0,5))
+
+outputU = lpSolve::lp("max",
+                      f.obj,
+                      f.con,
+                      f.dir,
+                      f.rhs)
+
+outputL = lpSolve::lp("min",
+                      f.obj,
+                      f.con,
+                      f.dir,
+                      f.rhs)
+
+# Range of possible rates:
+c(outputL$solution[4],outputU$solution[4])

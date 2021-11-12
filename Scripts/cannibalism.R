@@ -281,7 +281,7 @@ resultsf %>%
   ggplot(aes(x = cann_rate, y = value, color = Web)) + geom_line() + facet_wrap(.~name, scales = "free") + theme_classic()
 
 
-png("Figure2.png", width = 9, height = 4, units = "in", res = 600)
+png("Figure2.png", width = 9, height = 6, units = "in", res = 600)
 resultsf %>%
   mutate(Web2 = Web) %>%
   separate(Web2, into = c("Manuscript", NA, NA,NA,NA,NA), sep = " ") %>%
@@ -293,10 +293,15 @@ resultsf %>%
                          "A", "B", "C", "D", "E", "F",
                          "A", "B", "C", "D",
                          "A", "Koltz: No mutual pred.", "Koltz in CPER"),
-           Group     = factor(c("None", "None", "None", "None", "None",
+           Modification     = factor(c("None", "None", "None", "None", "None",
                          "None", "None", "None", "None", "None",
                          "None", "None", "None", "None", "None",
                          "None", "Koltz: No mutual pred.", "Koltz in CPER"), levels = c("None", "Koltz: No mutual pred.", "Koltz in CPER"))), by = "Web"
   ) %>%
-  ggplot(aes(x = cann_rate, y = value, color = Manuscript, linetype = Group, group = Web)) + geom_line() + facet_wrap(.~name, scales = "free") + theme_classic() + ylab("Mineralization (prop. of flux)") + xlab("Cannibalism rate (prop. of maximum)")
+  rename(MS = Manuscript) %>%
+  left_join(
+    tibble(MS = c("Andres2016", "CPER", "deRuiter1994", "Holtkamp", "Koltz"),
+           Manuscript = c("Andrés et al. 2016", "Hunt et al. 1987", "de Ruiter et al. 1994", "Holtkamp et al. 2011", "Koltz et al. 2018"))
+  ) %>%
+  ggplot(aes(x = cann_rate, y = value, color = Manuscript, linetype = Modification, group = Web)) + geom_line() + facet_wrap(.~name) + theme_classic() + ylab("Mineralization (prop. of flux)") + xlab("Cannibalism rate (prop. of maximum)")
 dev.off()
