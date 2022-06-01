@@ -377,3 +377,18 @@ cowplot::plot_grid(
     ggplot(aes(x = cann_rate, y = value, color = Nodes, group = Nodes)) + geom_line() + facet_wrap(.~name) + theme_classic() + ylab("Mineralization (prop. of flux)") + xlab("Cannibalism rate (prop. of maximum)")
 )
 dev.off()
+
+# Produce a table of a and p ----
+Koltz2018$prop %>% select(ID,d,a,p,B, CN) %>% mutate(Manuscript = "Koltz et al. 2018") %>%
+  bind_rows(
+    Hunt1987$prop %>% select(ID,d,a,p,B, CN) %>% mutate(Manuscript = "Hunt et al. 1987")
+  )%>%
+  bind_rows(
+    deRuiter1994$CON$prop %>% select(ID,d,a,p,B, CN) %>% mutate(Manuscript = "de Ruiter et al. 1994")
+  )%>%
+  bind_rows(
+    Holtkamp2011$Young$prop %>% select(ID,d,a,p,B, CN) %>% mutate(Manuscript = "Holtkamp et al. 2011")
+  )%>%
+  bind_rows(
+    Andres2016$GA$prop %>% select(ID,d,a,p,B, CN) %>% mutate(Manuscript = "Andres et al. 2016")
+  ) %>% write_csv("Data/paramout.csv")
