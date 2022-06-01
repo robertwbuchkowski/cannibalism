@@ -305,3 +305,75 @@ resultsf %>%
   ) %>%
   ggplot(aes(x = cann_rate, y = value, color = Manuscript, linetype = Modification, group = Web)) + geom_line() + facet_wrap(.~name) + theme_classic() + ylab("Mineralization (prop. of flux)") + xlab("Cannibalism rate (prop. of maximum)")
 dev.off()
+
+
+
+# Explore how lumping influences cannibalism rates ----
+
+c16 = comtrosp(Hunt1987)
+c15 = comtrosp(c16)
+c14 = comtrosp(c15)
+c13 = comtrosp(c14)
+c12 = comtrosp(c13)
+c11 = comtrosp(c12, selected = c("Amoebae", "Flagellates"))
+c10 = comtrosp(c11, selected = c("Predatorymites", "Nematophagousmites"))
+
+output = cbind(cantable(Hunt1987), Nodes = 17) %>%
+  bind_rows(cbind(cantable(c16), Nodes = 16)) %>%
+  bind_rows(cbind(cantable(c15), Nodes = 15)) %>%
+  bind_rows(cbind(cantable(c14), Nodes = 14)) %>%
+  bind_rows(cbind(cantable(c13), Nodes = 13)) %>%
+  bind_rows(cbind(cantable(c12), Nodes = 12)) %>%
+  bind_rows(cbind(cantable(c11), Nodes = 11)) %>%
+  bind_rows(cbind(cantable(c10), Nodes = 10)) %>%
+  separate(ID, into = c("ID1", "ID2", "ID3", "ID4", "ID5"), sep = "/")
+
+# Create a vector for the results:
+results = vector(mode = "list", length = 8)
+
+# Hunt1987
+results[[1]] <- cbind(data.frame(t(sapply(seq(0, 0.99, by = 0.01), getcanndiff, testcomm = Hunt1987, cancan = c(1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0)))), Nodes = 17)
+
+results[[2]] <- cbind(data.frame(t(sapply(seq(0, 0.99, by = 0.01), getcanndiff, testcomm = c16, cancan = c(1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0)))), Nodes = 16)
+
+results[[3]] <- cbind(data.frame(t(sapply(seq(0, 0.99, by = 0.01), getcanndiff, testcomm = c15, cancan = c(1,1,1,1,1,1,1,1,1,0,1,1,1,0,0)))), Nodes = 15)
+
+results[[4]] <- cbind(data.frame(t(sapply(seq(0, 0.99, by = 0.01), getcanndiff, testcomm = c14, cancan = c(1,1,1,1,1,1,1,1,0,1,1,1,0,0)))), Nodes = 14)
+
+results[[5]] <- cbind(data.frame(t(sapply(seq(0, 0.99, by = 0.01), getcanndiff, testcomm = c13, cancan = c(1,1,1,1,1,1,1,1,1,1,1,0,0)))), Nodes = 13)
+
+results[[6]] <- cbind(data.frame(t(sapply(seq(0, 0.99, by = 0.01), getcanndiff, testcomm = c12, cancan = c(1,1,1,1,1,1,1,1,1,1,0,0)))), Nodes = 12)
+
+results[[7]] <- cbind(data.frame(t(sapply(seq(0, 0.99, by = 0.01), getcanndiff, testcomm = c11, cancan = c(1,1,1,1,1,1,1,1,1,0,0)))), Nodes = 11)
+
+results[[8]] <- cbind(data.frame(t(sapply(seq(0, 0.99, by = 0.01), getcanndiff, testcomm = c10, cancan = c(1,1,1,1,1,1,1,1,0,0)))), Nodes = 10)
+
+
+resultsf = tibble(do.call("rbind", results))
+
+
+png("lumping_analysis.png", width = 9, height = 6, units = "in", res = 600)
+cowplot::plot_grid(
+  output %>% 
+    pivot_longer(contains("ID")) %>%
+    filter(!is.na(value)) %>%
+    rename(ID = value) %>%
+    filter(ID %in%
+             c(output %>% filter(!is.na(ID2)) %>% select(contains("ID"), Nodes) %>% pivot_longer(-Nodes) %>% filter(!is.na(value)) %>% pull(value) %>% unique())
+    ) %>%
+    ggplot(aes(x = Nodes, y = MaxCan, color = ID)) + geom_line() + theme_classic() + ylab("Max Cannibalism Rate") + xlab("Number of nodes in the web"),
+  
+  output %>% 
+    pivot_longer(contains("ID")) %>%
+    filter(!is.na(value)) %>%
+    rename(ID = value) %>%
+    filter(ID %in%
+             c(output %>% filter(!is.na(ID2)) %>% select(contains("ID"), Nodes) %>% pivot_longer(-Nodes) %>% filter(!is.na(value)) %>% pull(value) %>% unique())
+    ) %>%
+    ggplot(aes(x = Nodes, y = PrefCan, color = ID)) + geom_line() + theme_classic() + ylab("Preference for Cannibalism") + xlab("Number of nodes in the web"),resultsf %>%
+    mutate(Nodes = paste("Nodes =",Nodes))  %>%
+    rename(Carbon = Cprop, Nitrogen = Nprop) %>%
+    pivot_longer(Carbon:Nitrogen) %>%
+    ggplot(aes(x = cann_rate, y = value, color = Nodes, group = Nodes)) + geom_line() + facet_wrap(.~name) + theme_classic() + ylab("Mineralization (prop. of flux)") + xlab("Cannibalism rate (prop. of maximum)")
+)
+dev.off()
