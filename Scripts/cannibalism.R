@@ -370,10 +370,20 @@ cowplot::plot_grid(
     filter(ID %in%
              c(output %>% filter(!is.na(ID2)) %>% select(contains("ID"), Nodes) %>% pivot_longer(-Nodes) %>% filter(!is.na(value)) %>% pull(value) %>% unique())
     ) %>%
-    ggplot(aes(x = Nodes, y = PrefCan, color = ID)) + geom_line() + theme_classic() + ylab("Preference for Cannibalism") + xlab("Number of nodes in the web"),resultsf %>%
+    ggplot(aes(x = Nodes, y = PrefCan, color = ID)) + geom_line() + theme_classic() + ylab("Preference for Cannibalism") + xlab("Number of nodes in the web"),
+  
+  resultsf %>%
     mutate(Nodes = paste("Nodes =",Nodes))  %>%
     rename(Carbon = Cprop, Nitrogen = Nprop) %>%
     pivot_longer(Carbon:Nitrogen) %>%
+    filter(name == "Carbon") %>%
+    ggplot(aes(x = cann_rate, y = value, color = Nodes, group = Nodes)) + geom_line() + facet_wrap(.~name) + theme_classic() + ylab("Mineralization (prop. of flux)") + xlab("Cannibalism rate (prop. of maximum)"),
+  
+  resultsf %>%
+    mutate(Nodes = paste("Nodes =",Nodes))  %>%
+    rename(Carbon = Cprop, Nitrogen = Nprop) %>%
+    pivot_longer(Carbon:Nitrogen) %>%
+    filter(name == "Nitrogen") %>%
     ggplot(aes(x = cann_rate, y = value, color = Nodes, group = Nodes)) + geom_line() + facet_wrap(.~name) + theme_classic() + ylab("Mineralization (prop. of flux)") + xlab("Cannibalism rate (prop. of maximum)")
 )
 dev.off()
