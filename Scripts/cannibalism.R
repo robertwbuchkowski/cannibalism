@@ -14,6 +14,7 @@ p_load(tidyverse,cowplot,gridGraphics, soilfoodwebs)
 
 # Maximum cannibalism plot -----
 # Try to plot the function for maximum cannibalism from the MS:
+png("cann_ap_compare.png", width = 5, height = 5, units = "in", res = 1000)
 expand.grid(CEp = seq(0,0.5,by=0.01),
             CEc = seq(0,0.5, by = 0.01)) %>%
   tibble() %>%
@@ -21,11 +22,11 @@ expand.grid(CEp = seq(0,0.5,by=0.01),
   ggplot(aes(x = CEc, y = CEp, fill = mcr)) + 
   geom_raster() + theme_classic() + 
   scale_fill_viridis_c(name = "Max cannibalism rate") +
-  xlab("Conversion efficiency canibalism") +
+  xlab("Conversion efficiency cannibalism") +
   ylab("Conversion efficiency other prey") + 
   geom_abline(intercept = 0, slope = 1, linetype = 2) +
   theme(legend.position = "top")
-
+dev.off()
 
 # Cannibalism ----
 # Equation 5:
