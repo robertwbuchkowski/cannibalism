@@ -307,7 +307,13 @@ resultsf %>%
   ggplot(aes(x = cann_rate, y = value, color = Manuscript, linetype = Modification, group = Web)) + geom_line() + facet_wrap(.~name) + theme_classic() + ylab("Mineralization (prop. of flux)") + xlab("Cannibalism rate (prop. of maximum)")
 dev.off()
 
-
+png("Figure2_carbon_talks.png", width = 9, height = 6, units = "in", res = 600)
+resultsf %>%
+  filter(!(Web %in% c("Koltz No mutual predation", "Koltz data in CPER"))) %>%
+  rename(Carbon = Cprop, Nitrogen = Nprop) %>%
+  select(-Nitrogen) %>%
+  ggplot(aes(x = cann_rate, y = Carbon,group = Web)) + geom_line() + theme_classic() + ylab("Carbon Mineralization (prop. of flux)") + xlab("Cannibalism rate (prop. of maximum)")
+dev.off()
 
 # Explore how lumping influences cannibalism rates ----
 
